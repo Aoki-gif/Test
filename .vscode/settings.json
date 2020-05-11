@@ -1,0 +1,12 @@
+{
+    "python.pythonPath": "C:\\Users\\AOKI\\Anaconda3\\envs\\reinforcement\\python.exe",
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "black",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "editor.formatOnSave": true,
+    "python.linting.enabled": true,
+    "python.linting.flake8Args": [
+        "--igonre=E501"
+    ]
+}
