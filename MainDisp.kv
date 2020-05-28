@@ -1,0 +1,58 @@
+#:kivy 1.0
+<Button>:
+    font_size: 20
+    color: 0,1,0,1
+    size_hint: 0.1, 0.1
+
+<MenuDisp>:
+    name:'menu'
+    BoxLayout:
+        orientation: 'vertical'
+        canvas:
+            Rectangle:
+                pos: 0, 0
+                size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        AnchorLayout:
+            anchor_x: 'left'
+            anchor_y: 'top'
+            Label:
+                id: lbltxt
+                text: 'Welcome!!! Plese Look at camera!'
+                font_size: '50'
+                color: (1,0,0,1)
+
+
+
+
+<FaceDisp>:
+    name:'face'
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        Label:
+            text: 'Plese wait!! If you think that you wait many time, Please Push ReCall '
+            font_size: '50'
+            color: (1,0,0,1)
+            text_size: root.width, None
+            size: self.texture_size
+
+    AnchorLayout:
+        anchor_x: 'left'
+        anchor_y: 'bottom'
+        Button:
+            text: 'Recall'
+            pos: 0, root.top
+            pos_hint: {"x":0, "top":1}
+            on_press: root.on_SendMail()
+
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'bottom'
+        Button:
+            pos: 0, root.top
+            pos_hint: {"x":0, "top":1}
+            text: 'End'
+            on_press: root.on_backDisp()
+
