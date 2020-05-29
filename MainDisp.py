@@ -1,34 +1,65 @@
+# -*- coding: utf-8 -*
 import os
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, Screen
+
+# 複数画面対応
+from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
+
+# 更新対応
 from kivy.clock import Clock, ClockEvent
 from time import sleep
 
+# 画面レイアウト対応
 from kivy.graphics.texture import Texture
 from kivy.graphics import Rectangle
 from kivy.uix.image import Image
 from kivy.uix.boxlayout import BoxLayout
+
+# カメラ対応
 import cv2
+
+# 画像表示対応
+from kivy.properties import StringProperty, ObjectProperty
+
+# 自作クラス
 import clsMail
+
+# 日本語対応
+from kivy.core.text import LabelBase, DEFAULT_FONT
+from kivy.resources import resource_add_path
+
+resource_add_path("c:/Windows/Fonts/")
+LabelBase.register(DEFAULT_FONT, "msgothic.ttc")
+
 
 # カスケードファイルパス
 cascPath = "C:/Users/AOKI/Anaconda3/envs/reinforcement/Lib/site-packages/cv2/data/haarcascade_frontalface_alt.xml"
 
 # スクリーンマネージャー
-sm = ScreenManager()
+sm = ScreenManager(transition=NoTransition())
 cap = cv2.VideoCapture(0)
 
 
 class MenuDisp(Screen):
     FrameCnt = 0
     MoveFlg = False
+    dispimg = ObjectProperty(None)
+    lbltxt = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        """
+        -----
+        MenuDispクラス　初期化
+        -----
+        """
+        super(MenuDisp, self).__init__(**kwargs)
+        pass
 
     def NextScreen(self):
         """
         ------
         次の画面移動
         ------
-        
         ------
         """
         if self.MoveFlg == True:
@@ -85,24 +116,15 @@ class MenuDisp(Screen):
                 self.FrameCnt += 1
 
                 if self.FrameCnt >= 5:
-                    # 画像表示
-                    with self.canvas:
-                        Rectangle(
-                            texture=texture1,
-                            pos=(0, 0),
-                            size=(img.shape[1], img.shape[0]),
-                        )
+                    print("Disp img")
+                    self.ids["dispimg"].texture = texture1
                     if self.FrameCnt >= 30:
                         self.FrameCnt = 0
                         self.MoveFlg = True
-                # self.FrameCnt += 1
             else:
+                print("Fram0")
                 self.FrameCnt = 0
-                # 画像表示
-                with self.canvas:
-                    Rectangle(
-                        texture="", pos=(0, 0), size=(None, None),
-                    )
+                self.ids["dispimg"].texture = None
         else:
             # 次画面へ
             self.NextScreen()
@@ -159,7 +181,15 @@ class MainDisp(App):
         clsMenu.Strat()
         return sm
 
+    def on_stop(self):
+        """
+        -------
+        終了処理
+        -------
+        カメラ閉じる
+        """
+        cap.release()
+
 
 if __name__ == "__main__":
-    # MainDisp().run()
     MainDisp().run()
