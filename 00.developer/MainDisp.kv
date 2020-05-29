@@ -1,0 +1,70 @@
+#:kivy 1.0
+
+<Button>:
+    font_size: 20
+    color: 0,1,0,1
+    size_hint: 0.1, 0.1
+    font_name: 'c:/Windows/Fonts/msgothic.ttc'
+
+<Label>:
+    font_name: 'c:/Windows/Fonts/msgothic.ttc'
+
+
+<MenuDisp>:
+    name:'menu'
+    dispimg: dispimg
+    lbltxt: lbltxt
+
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            orientation: 'vertical'
+            Image:
+                id: dispimg
+                size_hint: 1.0, 1.0
+
+        BoxLayout:
+            size_hint: 1.0, 0.1
+            AnchorLayout:
+                anchor_x: 'left'
+                anchor_y: 'top'
+                Label:
+                    id: lbltxt
+                    font_name: ''
+                    text: 'いらっしゃいませ。 受付の方は、カメラ正面を向いてください。'
+                    font_size: '50'
+                    color: (1,0,0,1)
+
+
+
+
+<FaceDisp>:
+    name:'face'
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        Label:
+            text: '担当者を呼出中です。しばらくお待ちください。担当者が来ない場合、再呼出ボタンを押してください。'
+            font_size: '50'
+            color: (1,0,0,1)
+            text_size: root.width, None
+            size: self.texture_size
+
+    AnchorLayout:
+        anchor_x: 'left'
+        anchor_y: 'bottom'
+        Button:
+            text: '再呼出'
+            pos: 0, root.top
+            pos_hint: {"x":0, "top":1}
+            on_press: root.on_SendMail()
+
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'bottom'
+        Button:
+            pos: 0, root.top
+            pos_hint: {"x":0, "top":1}
+            text: '受付完了'
+            on_press: root.on_backDisp()
+
